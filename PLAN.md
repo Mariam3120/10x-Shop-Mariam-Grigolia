@@ -25,7 +25,7 @@ Estimates are in hours. **DoD** = Definition of Done. **Status:** ⬜ to do · �
 ### Setup & Quality
 | # | Task | Est. | Week | DoD | Status |
 |---|---|---|---|---|---|
-| 1 | Vite + React + TS project, strict tsconfig, scripts (`dev`, `build`, `preview`, `typecheck`, `lint`) | 2h | 1 | `typecheck` and `build` pass with 0 errors | 🟡 |
+| 1 | Vite + React + TS project, strict tsconfig, scripts (`dev`, `build`, `preview`, `typecheck`, `lint`) | 2h | 1 | `typecheck` and `build` pass with 0 errors | ✅  |
 | 2 | Tailwind v4 + React Router installed | 1h | 1 | A Tailwind class visibly changes the UI | ⬜ |
 | 3 | ESLint with `no-explicit-any` and react-hooks rules | 1h | 1 | `npm run lint` runs clean | ⬜ |
 | 4 | Core types (`Product`, `ProductsResponse`, `CartItem`, `CartState`, `AuthUser`, `LoginFormValues`, `CheckoutFormValues`) | 2h | 1 | All models live in `types/`, used by real code | ⬜ |
