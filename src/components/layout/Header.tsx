@@ -1,11 +1,34 @@
+import { Link, NavLink } from "react-router";
+
 function Header() {
   return (
     <header>
-      <div className="font-bold text-xl">10X Shop</div>
+      <Link to="/" className="font-bold text-xl">
+        10X Shop
+      </Link>
+
       <nav>
-        <span>Catalog</span>
-        <span>Cart</span>
-        <span>Log in</span>
+        <NavLink
+          to="/"
+          end
+          className={({ isActive }) => (isActive ? "font-bold underline" : "")}
+        >
+          Catalog
+        </NavLink>
+
+        <NavLink
+          to="/cart"
+          className={({ isActive }) => (isActive ? "font-bold underline" : "")}
+        >
+          Cart
+        </NavLink>
+
+        <NavLink
+          to="/login"
+          className={({ isActive }) => (isActive ? "font-bold underline" : "")}
+        >
+          Log in
+        </NavLink>
       </nav>
     </header>
   );
