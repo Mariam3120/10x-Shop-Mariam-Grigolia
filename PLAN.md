@@ -36,8 +36,8 @@ Estimates are in hours. **DoD** = Definition of Done. **Status:** ⬜ to do · �
 ### Layout & Routing
 | # | Task | Est. | Week | DoD | Status |
 |---|---|---|---|---|---|
-| 8 | `Layout` (Header + `Outlet` + Footer), `Header` with NavLinks | 3h | 1 | Header written once, active link highlighted | ⬜ |
-| 9 | Routes `/`, `/login`, `/products/:id`, `/cart`, `/checkout`, `*` + NotFound + ScrollToTop | 2h | 1 | All routes open without page reload; unknown URL shows 404 | ⬜ |
+| 8 | `Layout` (Header + `Outlet` + Footer), `Header` with NavLinks | 3h | 1 | Header written once, active link highlighted | ✅ |
+| 9 | Routes `/`, `/login`, `/products/:id`, `/cart`, `/checkout`, `*` + NotFound + ScrollToTop | 2h | 1 | All routes open without page reload; unknown URL shows 404 | ✅ |
 
 ### Auth
 | # | Task | Est. | Week | DoD | Status |
