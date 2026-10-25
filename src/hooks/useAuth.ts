@@ -1,6 +1,9 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
+//we create this hook to avoid importing useContext and AuthContext in every component 
+// that needs to access the authentication state and functions.
+
 export function useAuth() {
   const context = useContext(AuthContext);
   //useContext is a react hook that allows us to access the value of a context. 
