@@ -58,15 +58,22 @@ function LoginPage() {
   //and this new errors are the type of LoginErrors
 
   function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
+    //we say to TS that that event is connecting to submit 
     e.preventDefault();
 
     const newErrors = validate();
     setErrors(newErrors);
+    //again after clicked on login we say to check if there are errors, which comes as an object 
+    //and validate checks and assigns to newErrors value name 
+    //then we set it, if errors appear we put it in setErrors to see red messages on inputs 
 
     if (Object.keys(newErrors).length === 0) {
       login(values.username.trim());
       navigate("/");
     }
+    //Object.keys(newErrors) takes newErrors object and puts its keys inside an array
+    //if obj is {} empty array will be as well, if there are mistakes in username array will be [username]
+    //when all good we log in globally which is given name and trim 
   }
 
   return (
