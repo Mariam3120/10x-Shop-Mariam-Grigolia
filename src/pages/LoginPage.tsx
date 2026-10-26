@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { ChangeEvent, SubmitEvent } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useLocation } from "react-router";
 import { useAuth } from "../hooks/useAuth";
 import type { LoginFormValues } from "../types/user";
 
@@ -9,6 +9,25 @@ interface LoginErrors {
   password?: string;
 }
 //? means optional, when form is loaded it can be empty for the first time
+
+function getFromPath(state: unknown): string {
+  //here state is variable name that location.state used which protectedRoute used (unknown in TS is that we don;t know what it is -obj, null, string, number...)
+  //last :string means doesn't matter what path the function goes return STRING 
+  if (
+    typeof state === "object" &&
+    state !== null &&
+    "from" in state &&
+    typeof state.from === "string"
+  ) {
+    return state.from;
+  }
+  //first we check if it is object at all and if state !== null (coz in js null is obj)
+  //then we check if obj has "from", and we check that this from is really a text, after TS allows to return state.from
+
+  return "/";
+  //if mistake then traightforward to main pg
+}
+
 
 function LoginPage() {
   const [values, setValues] = useState<LoginFormValues>({
@@ -24,6 +43,7 @@ function LoginPage() {
   const { login } = useAuth();
   //we used global value that is accesible by hook, we need just to login(isLoggedIn: true)
   const navigate = useNavigate();
+  const location = useLocation();
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     //ChangeEvent<HTMLInputElement> it is generic that tells TS (changeEvent tells that something is changing),
@@ -69,11 +89,13 @@ function LoginPage() {
 
     if (Object.keys(newErrors).length === 0) {
       login(values.username.trim());
-      navigate("/");
+      navigate(getFromPath(location.state), { replace: true });
     }
     //Object.keys(newErrors) takes newErrors object and puts its keys inside an array
     //if obj is {} empty array will be as well, if there are mistakes in username array will be [username]
     //when all good we log in globally which is given name and trim 
+    //navigate to our helper func, which takes param what protectedRoute delivered(this:return <Navigate to="/login" replace state={{ from: location.pathname }} />)
+    //replace:true means - don;t write it as new page history just change current (login) to checkout
   }
 
   return (
