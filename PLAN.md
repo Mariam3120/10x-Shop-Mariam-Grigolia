@@ -42,9 +42,9 @@ Estimates are in hours. **DoD** = Definition of Done. **Status:** ⬜ to do · �
 ### Auth
 | # | Task | Est. | Week | DoD | Status |
 |---|---|---|---|---|---|
-| 10 | `AuthContext` with `login(username)` / `logout()` | 2h | 1 | Header shows username + Log out when logged in | ⬜ |
-| 11 | Login controlled form + validation | 2h | 1 | Empty fields show exact PRD error texts; no reload on submit | ⬜ |
-| 12 | Checkout guard (redirect guest → `/login` → back to `/checkout`) | 2h | 1 | Guest round trip works | ⬜ |
+| 10 | `AuthContext` with `login(username)` / `logout()` | 2h | 1 | Header shows username + Log out when logged in | ✅ |
+| 11 | Login controlled form + validation | 2h | 1 | Empty fields show exact PRD error texts; no reload on submit | ✅ |
+| 12 | Checkout guard (redirect guest → `/login` → back to `/checkout`) | 2h | 1 | Guest round trip works | ✅ |
 
 ### Catalog
 | # | Task | Est. | Week | DoD | Status |
