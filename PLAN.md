@@ -49,7 +49,7 @@ Estimates are in hours. **DoD** = Definition of Done. **Status:** ⬜ to do · �
 ### Catalog
 | # | Task | Est. | Week | DoD | Status |
 |---|---|---|---|---|---|
-| 13 | Fetch products (`useEffect`), loading/error/empty states | 3h | 1 | All three states can be triggered and are visible | ⬜ |
+| 13 | Fetch products (`useEffect`), loading/error/empty states | 3h | 1 | All three states can be triggered and are visible | ✅ |
 | 14 | `ProductCard` + `ProductGrid` (discount price, rating, stock badge) | 4h | 1 | Grid 1 → 2 → 4 columns; card opens details | ⬜ |
 | 15 | *(FULL)* Search, category, sort, pagination, URL state | 8h | 3 | Filters combine per PRD P2.4–P2.8; refresh keeps state | ⬜ |
 
