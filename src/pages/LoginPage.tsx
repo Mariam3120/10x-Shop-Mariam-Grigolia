@@ -55,6 +55,9 @@ function LoginPage() {
     //[] this is computed property name - so when user types in username field it becomes: usernaem: "someName"
     //when user types in password, [name] becomes password="somePassw12"
     setErrors({ ...errors, [name]: undefined });
+    //here we say take/spread old errors that we have and leave it still on power:) 
+    //[name] to understand where the user is typing if he types in username name will become username. if passwrd -> psswrd then
+    //undefined thells: make that error undefined-so clean it (gaxade am eroris mnishvneloba undefined)
   }
 
   function validate(): LoginErrors {
