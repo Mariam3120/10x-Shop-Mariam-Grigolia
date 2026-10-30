@@ -1,7 +1,7 @@
 import { Link, NavLink, useNavigate } from "react-router";
 import { useAuth } from "../../hooks/useAuth";
 
-function Header() {
+export function Header() {
   const { user, logout } = useAuth();
   //here we use the useAuth hook to access global authentication 
   //only user and logout because header doesn't need login function, it only needs to display the user's name 
@@ -62,7 +62,6 @@ function Header() {
     </header>
   );
 }
-export default Header;
 
 
 //isLoggedIn here can be used because we are using useAuth hook, which provides the user state from the AuthContext.

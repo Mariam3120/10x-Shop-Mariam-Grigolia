@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router";
 
-function ScrollToTop() {
+export function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -10,7 +10,6 @@ function ScrollToTop() {
 
   return null;
 }
-export default ScrollToTop;
 
 
 //[pathname] means the effect re-runs every time the URL path changes, which is exactly when we want to scroll up.

@@ -1,14 +1,14 @@
 import { Routes, Route } from "react-router";
-import Layout from "../components/layout/Layout";
+import { Layout } from "../components/layout/Layout";
 import CatalogPage from "../pages/CatalogPage";
 import CartPage from "../pages/CartPage";
 import CheckoutPage from "../pages/CheckoutPage";
 import LoginPage from "../pages/LoginPage";
 import ProductPage from "../pages/ProductPage";
 import NotFoundPage from "../pages/NotFoundPage";
-import ProtectedRoute from "./ProtectedRoute";
+import { ProtectedRoute } from "./ProtectedRoute";
 
-function AppRoutes() {
+export function AppRoutes() {
   return (
     <Routes>
       <Route element={<Layout />}>
@@ -24,4 +24,3 @@ function AppRoutes() {
     </Routes>
   );
 }
-export default AppRoutes;

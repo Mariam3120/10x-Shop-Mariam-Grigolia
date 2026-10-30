@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router";
 import { useAuth } from "../hooks/useAuth";
 
-function ProtectedRoute() {
+export function ProtectedRoute() {
   const { user } = useAuth();
   //we call global value, to see if someone is logged in at all, we only take user from obj
 
@@ -19,4 +19,3 @@ function ProtectedRoute() {
   return <Outlet />
   //if user saccessfully logged in then we allow checkout or whtvr page to appear 
 }
-export default ProtectedRoute;
