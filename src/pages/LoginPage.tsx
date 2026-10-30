@@ -54,6 +54,7 @@ function LoginPage() {
     //spread operator, we keep old things and also take what we need now
     //[] this is computed property name - so when user types in username field it becomes: usernaem: "someName"
     //when user types in password, [name] becomes password="somePassw12"
+    setErrors({ ...errors, [name]: undefined });
   }
 
   function validate(): LoginErrors {
