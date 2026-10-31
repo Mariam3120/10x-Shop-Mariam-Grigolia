@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchProducts } from "../api/products.api";
 import type { Product } from "../types/product";
+import { ProductGrid } from "../components/product/ProductGrid";
 
 function CatalogPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -8,24 +9,25 @@ function CatalogPage() {
   const [loading, setLoading] = useState(true);
   //true coz when page opens its truly loading
   const [error, setError] = useState<string | null>(null);
-  //at start when there's no error it is null, when error occurs it'll become a text 
+  //at start when there's no error it is null, when error occurs it'll become a text
 
   useEffect(() => {
     let ignore = false;
     //sit: if user enters this page and asks for data but till server responds user changed page, old component disappeard(unmount)
     //so when server returns respond, old component has already died but its code tries to call setProducts or setLoading
-    //react doen't like that, so deal is: when components opens ingore is false, if user run out the page react 
+    //react doen't like that, so deal is: when components opens ingore is false, if user run out the page react
     //passes cleanup function  return () => { ignore = true; }, so when we check if(!ignore) -> if component is still alive
-    //only then change the state 
+    //only then change the state
     //The real benefit of ignore is that an old, late response can't overwrite newer data.
 
     async function load() {
-      //since useEffect first argument can't be async we use helper func load 
+      //since useEffect first argument can't be async we use helper func load
       try {
         const data = await fetchProducts();
         if (!ignore) {
           setProducts(data.products);
           //if component is on place we arrange products taken from data into setProducts
+          //როცა სერვერიდან მონაცემები წარმატებით წამოვა, setProducts(data.products) ფუნქციით მთელ ამ მასივს ვინახავთ ამ products ცვლადში.
         }
       } catch (err: unknown) {
         //when js throws error it doesn't know its type can be string or number so we tell TS unknown -not clear whar it is:)
@@ -37,7 +39,7 @@ function CatalogPage() {
       } finally {
         if (!ignore) {
           setLoading(false);
-          //finally runs always no matter what 
+          //finally runs always no matter what
         }
       }
     }
@@ -50,13 +52,13 @@ function CatalogPage() {
     };
   }, []);
   //[]once: means: call this effect once- when this component first time appears on screen(mount)
-  
-  //Early returns: till page is loading if we don;t have these checks code will try to execute map downwards 
-  //so when data is loading or there are no products yet it will crash 
-  //BUT!!!!the early returns aren't there to prevent a crash. products starts as [], and [].map() is safe. 
+
+  //Early returns: till page is loading if we don;t have these checks code will try to execute map downwards
+  //so when data is loading or there are no products yet it will crash
+  //BUT!!!!the early returns aren't there to prevent a crash. products starts as [], and [].map() is safe.
   // They're there to show the right screen for each state.
   if (loading) return <p>Loading...</p>;
-  //if it is loading write that message don't go down 
+  //if it is loading write that message don't go down
   if (error) return <p>{error}</p>;
   //if error - write that- stop
   if (products.length === 0) return <p>No products found.</p>;
@@ -64,16 +66,17 @@ function CatalogPage() {
   return (
     <>
       <h1>Catalog</h1>
-      {products.map((product) => (
-        <p key={product.id}>{product.title}</p>
-        //only when evrthg is good we map and create <p> where we take product's title 
-        //product.id for react to clearly distinguish which prod.
-      ))}
+      <ProductGrid products={products} />
+      {/* THAT before {products.map((product) => (
+        <p key={product.id}>{product.title}  was before we created beautidul productCard and created component product grid which places all products into catalog page
+        map is happening there as well! here we just import:)))
+        <ProductGrid products={products} /> here we give it data that we actually have (left products same as ProductGridProps-products-that is what we called)
+        არჯვენა მხარე {products} (ფრჩხილებში)ეს არის ის ცვლადი, რომელიც CatalogPage-ში სერვერიდან წამოვიღე და შიგნით პროდუქტების მასივი აწყვია
+        
+      ))} */}
     </>
   );
 }
 export default CatalogPage;
-
-
 
 // pages keep export default so lazy routes (FULL) work easily later

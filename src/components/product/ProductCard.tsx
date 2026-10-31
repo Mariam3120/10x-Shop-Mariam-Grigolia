@@ -5,7 +5,7 @@ import { discountedPrice, formatPrice } from "../../utils/format";
 interface ProductCardProps {
   product: Product;
 }
-//here we determined props interface
+//here we determined props interface [JUST ONE PRODUCT as it is just one!!!!] key-value (first is my chosen name, second is Product the type which comes from types.ts)
 
 //when we create comp ProductCard it receives from parent(Catalog) some data, in this case specific product
 //TS to know exactly what ProductCard received we wrote interface which means:
