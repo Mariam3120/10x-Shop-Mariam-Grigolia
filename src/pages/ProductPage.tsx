@@ -5,6 +5,7 @@ import type { Product } from "../types/product";
 import NotFoundPage from "./NotFoundPage";
 import { discountedPrice, formatPrice } from "../utils/format";
 import { ProductGallery } from "../components/product/ProductGallery";
+import { QuantityStepper } from "../components/product/QuantityStepper";
 
 function ProductPage() {
   //useParams is a react hook that allows to read data from browser URL line (a.g/products/5) so that 5 or other text can be taken by useParams
@@ -20,6 +21,7 @@ function ProductPage() {
   //when server successfully returns response for a product by setProduct we will fill that box with specific product obj
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     if (!isValidId) return;
@@ -30,6 +32,8 @@ function ProductPage() {
       try {
         setLoading(true);
         setError(null);
+        setQuantity(1); //moving on another prdct - quantity to put on 1(coz we don't need again 3 on other for example:D). there were 2 ways to move quantity at 1 when moved to another prdct - use key like in gallery that 
+        //would force react to demolish whole component and build it again and 2nd by hand setQuantity(1) 
         // Why here: this effect re-runs whenever the id in the URL changes (see [productId, isValidId]).
         // Moving from /products/1 to /products/2 keeps the same ProductPage on screen, so React keeps its state.
         // Without these lines, loading would stay false after the first product,
@@ -79,7 +83,7 @@ function ProductPage() {
     <article className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         <ProductGallery
-          key={product.id}
+          key={product.id} //we need key here coz if e move from prod 1 to prod 2 it's totally new comp
           images={
             product.images.length > 0 ? product.images : [product.thumbnail]
           }
@@ -109,6 +113,15 @@ function ProductPage() {
               </span>
             )}
           </div>
+          {product.stock > 0 ? (
+            <QuantityStepper
+              quantity={quantity} //current quantity
+              max={product.stock} 
+              onChange={setQuantity}
+            />
+          ) : (
+            <p className="font-medium text-red-500">Out of stock</p>
+          )}
         </div>
       </div>
     </article>

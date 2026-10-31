@@ -57,7 +57,7 @@ Estimates are in hours. **DoD** = Definition of Done. **Status:** ⬜ to do · �
 | # | Task | Est. | Week | DoD | Status |
 |---|---|---|---|---|---|
 | 16 | Product Details (`useParams`, `[id]` dependency) | 3h | 2 | `/products/1` loads; `/products/abc` and `/999999` show NotFound | ✅ |
-| 17 | Image picker + quantity stepper + Add to cart | 3h | 2 | Qty stays within 1…stock; out-of-stock disables button | ⬜ |
+| 17 | Image picker + quantity stepper + Add to cart | 3h | 2 | Qty stays within 1…stock; out-of-stock disables button | 🟡 |
 | 18 | *(FULL)* Reviews + Related products | 5h | 3 | Review survives reload; related link loads new product | ⬜ |
 
 ### Cart
