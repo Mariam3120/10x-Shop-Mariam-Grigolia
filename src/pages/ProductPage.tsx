@@ -4,6 +4,8 @@ import { fetchProductById } from "../api/products.api";
 import type { Product } from "../types/product";
 import NotFoundPage from "./NotFoundPage";
 import { discountedPrice, formatPrice } from "../utils/format";
+import { ProductGallery } from "../components/product/ProductGallery";
+import { QuantityStepper } from "../components/product/QuantityStepper";
 
 function ProductPage() {
   //useParams is a react hook that allows to read data from browser URL line (a.g/products/5) so that 5 or other text can be taken by useParams
@@ -19,6 +21,7 @@ function ProductPage() {
   //when server successfully returns response for a product by setProduct we will fill that box with specific product obj
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     if (!isValidId) return;
@@ -29,6 +32,8 @@ function ProductPage() {
       try {
         setLoading(true);
         setError(null);
+        setQuantity(1); //moving on another prdct - quantity to put on 1(coz we don't need again 3 on other for example:D). there were 2 ways to move quantity at 1 when moved to another prdct - use key like in gallery that 
+        //would force react to demolish whole component and build it again and 2nd by hand setQuantity(1) 
         // Why here: this effect re-runs whenever the id in the URL changes (see [productId, isValidId]).
         // Moving from /products/1 to /products/2 keeps the same ProductPage on screen, so React keeps its state.
         // Without these lines, loading would stay false after the first product,
@@ -61,13 +66,13 @@ function ProductPage() {
   // Dependency array: React re-runs this effect only when one of these values changes.
   // A new id in the URL means a new fetch, so the page always shows the right product.
   // isValidId is listed because the effect uses it too, and the ESLint rule requires it.
-  //it's like: watch when one of these values changes and give this code again when it changes 
+  //it's like: watch when one of these values changes and give this code again when it changes
 
   if (!isValidId) return <NotFoundPage />;
   if (loading) return <p className="text-center py-12">Loading…</p>;
   if (error) return <p className="text-center py-12 text-red-500">{error}</p>;
 
- //if product can;t be found we show not found page again
+  //if product can;t be found we show not found page again
   if (!product) return <NotFoundPage />;
 
   const finalPrice = discountedPrice(product.price, product.discountPercentage);
@@ -77,11 +82,14 @@ function ProductPage() {
   return (
     <article className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-        <img
-          src={product.thumbnail}
-          alt={product.title}
-          className="w-full h-96 object-contain bg-gray-50 rounded-lg border border-gray-100 p-4"
+        <ProductGallery
+          key={product.id} //we need key here coz if e move from prod 1 to prod 2 it's totally new comp
+          images={
+            product.images.length > 0 ? product.images : [product.thumbnail]
+          }
+          title={product.title}
         />
+
         <div className="flex flex-col gap-4">
           <span className="text-sm text-gray-500 uppercase tracking-wide">
             {product.category} {product.brand && `· ${product.brand}`}
@@ -105,6 +113,15 @@ function ProductPage() {
               </span>
             )}
           </div>
+          {product.stock > 0 ? (
+            <QuantityStepper
+              quantity={quantity} //current quantity
+              max={product.stock} 
+              onChange={setQuantity}
+            />
+          ) : (
+            <p className="font-medium text-red-500">Out of stock</p>
+          )}
         </div>
       </div>
     </article>
