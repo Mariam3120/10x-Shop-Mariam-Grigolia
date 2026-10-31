@@ -4,6 +4,7 @@ import { fetchProductById } from "../api/products.api";
 import type { Product } from "../types/product";
 import NotFoundPage from "./NotFoundPage";
 import { discountedPrice, formatPrice } from "../utils/format";
+import { ProductGallery } from "../components/product/ProductGallery";
 
 function ProductPage() {
   //useParams is a react hook that allows to read data from browser URL line (a.g/products/5) so that 5 or other text can be taken by useParams
@@ -61,13 +62,13 @@ function ProductPage() {
   // Dependency array: React re-runs this effect only when one of these values changes.
   // A new id in the URL means a new fetch, so the page always shows the right product.
   // isValidId is listed because the effect uses it too, and the ESLint rule requires it.
-  //it's like: watch when one of these values changes and give this code again when it changes 
+  //it's like: watch when one of these values changes and give this code again when it changes
 
   if (!isValidId) return <NotFoundPage />;
   if (loading) return <p className="text-center py-12">Loading…</p>;
   if (error) return <p className="text-center py-12 text-red-500">{error}</p>;
 
- //if product can;t be found we show not found page again
+  //if product can;t be found we show not found page again
   if (!product) return <NotFoundPage />;
 
   const finalPrice = discountedPrice(product.price, product.discountPercentage);
@@ -77,11 +78,14 @@ function ProductPage() {
   return (
     <article className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-        <img
-          src={product.thumbnail}
-          alt={product.title}
-          className="w-full h-96 object-contain bg-gray-50 rounded-lg border border-gray-100 p-4"
+        <ProductGallery
+          key={product.id}
+          images={
+            product.images.length > 0 ? product.images : [product.thumbnail]
+          }
+          title={product.title}
         />
+
         <div className="flex flex-col gap-4">
           <span className="text-sm text-gray-500 uppercase tracking-wide">
             {product.category} {product.brand && `· ${product.brand}`}
