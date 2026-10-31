@@ -1,4 +1,4 @@
-import type { ProductsResponse } from "../types/product";
+import type { Product, ProductsResponse } from "../types/product";
 //we import productsresponse coz it is our determined structure which says to TS:
 //from server we will receive this info which will have exatly that fields (total skip etc.)
 
@@ -24,5 +24,27 @@ export async function fetchProducts(): Promise<ProductsResponse> {
   const data: ProductsResponse = await response.json();
   //const data: ProductsResponse შიგნით აკონტროლებს იმას, თუ როგორ აღიქვამს response.json()-ის პასუხს კოდი.
 
+  return data;
+}
+
+/*
+fetch by ID is necessary coz when we are in catalog and click to one product, we should open that one's details so we find it by its' ID
+that is exactly why we need this function down, we need that one product's details when clicked to take from server 
+(id: number)->id is a parameter which should be (NUMBER!)
+Promise<Product | null> -> promise should return either Product or null 
+*/
+
+export async function fetchProductById(id: number): Promise<Product | null> {
+  const response = await fetch(`${BASE_URL}/products/${id}`);
+  //specific ID that we ask from server
+  if (response.status === 404) {
+    return null;
+  }
+  //if such Id can;t be found -> 404
+  if (!response.ok) {
+    throw new Error("Failed to load product");
+  }
+  //if some other technical error(500) then message
+  const data: Product = await response.json();
   return data;
 }
