@@ -57,13 +57,13 @@ Estimates are in hours. **DoD** = Definition of Done. **Status:** ⬜ to do · �
 | # | Task | Est. | Week | DoD | Status |
 |---|---|---|---|---|---|
 | 16 | Product Details (`useParams`, `[id]` dependency) | 3h | 2 | `/products/1` loads; `/products/abc` and `/999999` show NotFound | ✅ |
-| 17 | Image picker + quantity stepper + Add to cart | 3h | 2 | Qty stays within 1…stock; out-of-stock disables button | 🟡 |
+| 17 | Image picker + quantity stepper + Add to cart | 3h | 2 | Qty stays within 1…stock; out-of-stock disables button | ✅ |
 | 18 | *(FULL)* Reviews + Related products | 5h | 3 | Review survives reload; related link loads new product | ⬜ |
 
 ### Cart
 | # | Task | Est. | Week | DoD | Status |
 |---|---|---|---|---|---|
-| 19 | `CartContext` (add/remove/setQuantity, immutable) + `shop_cart` | 3h | 2 | Badge updates instantly; no mutation; cart survives reload | ⬜ |
+| 19 | `CartContext` (add/remove/setQuantity, immutable) + `shop_cart` | 3h | 2 | Badge updates instantly; no mutation; cart survives reload | ✅ |
 | 20 | Cart page (lines, totals, empty state, clear cart) | 3h | 2 | Totals update on every change; empty cart looks intentional | ⬜ |
 | 21 | *(FULL)* Promo code `10X10` | 2h | 3 | `10X10` gives −10%; `abc` shows "Invalid promo code" | ⬜ |
 
