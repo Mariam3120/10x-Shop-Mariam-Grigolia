@@ -86,7 +86,7 @@ Estimates are in hours. **DoD** = Definition of Done. **Status:** ⬜ to do · �
 ### Docs & Deploy
 | # | Task | Est. | Week | DoD | Status |
 |---|---|---|---|---|---|
-| 26 | First Vercel deploy + SPA rewrite (`vercel.json`) | 1h | 2 | `/products/5` opens directly and survives refresh | 🟡 |
+| 26 | First Vercel deploy + SPA rewrite (`vercel.json`) | 1h | 2 | `/products/5` opens directly and survives refresh | ✅ |
 | 27 | `DEBUG-LOG.md` — log real bugs as they happen | 2h | 1–3 | ≥ 3 entries in PRD format (symptom → repro → tool → cause → fix → lesson) | ⬜ |
 | 28 | `README.md` (EN) + `REPORT.md` | 4h | 3 | All PRD D3 sections present, live link at top | ⬜ |
 | 29 | Final QA: fresh clone → `npm install && npm run typecheck && npm run build` | 1h | 3 | Passes with 0 errors; repo submitted before Nov 6, 23:59 | ⬜ |
