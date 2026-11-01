@@ -6,8 +6,11 @@ import NotFoundPage from "./NotFoundPage";
 import { discountedPrice, formatPrice } from "../utils/format";
 import { ProductGallery } from "../components/product/ProductGallery";
 import { QuantityStepper } from "../components/product/QuantityStepper";
+import { useCart } from "../hooks/useCart";
 
 function ProductPage() {
+  const { addItem } = useCart();
+
   //useParams is a react hook that allows to read data from browser URL line (a.g/products/5) so that 5 or other text can be taken by useParams
   //id: string coz when it finds e.g id 5 - it is a text, evrthng in URL is a text
   const { id } = useParams<{ id: string }>();
@@ -32,8 +35,8 @@ function ProductPage() {
       try {
         setLoading(true);
         setError(null);
-        setQuantity(1); //moving on another prdct - quantity to put on 1(coz we don't need again 3 on other for example:D). there were 2 ways to move quantity at 1 when moved to another prdct - use key like in gallery that 
-        //would force react to demolish whole component and build it again and 2nd by hand setQuantity(1) 
+        setQuantity(1); //moving on another prdct - quantity to put on 1(coz we don't need again 3 on other for example:D). there were 2 ways to move quantity at 1 when moved to another prdct - use key like in gallery that
+        //would force react to demolish whole component and build it again and 2nd by hand setQuantity(1)
         // Why here: this effect re-runs whenever the id in the URL changes (see [productId, isValidId]).
         // Moving from /products/1 to /products/2 keeps the same ProductPage on screen, so React keeps its state.
         // Without these lines, loading would stay false after the first product,
@@ -116,12 +119,21 @@ function ProductPage() {
           {product.stock > 0 ? (
             <QuantityStepper
               quantity={quantity} //current quantity
-              max={product.stock} 
+              max={product.stock}
               onChange={setQuantity}
             />
           ) : (
             <p className="font-medium text-red-500">Out of stock</p>
           )}
+          <button
+            type="button"
+            disabled={product.stock === 0}
+            //if prod is not in the stock we disable the button
+            onClick={() => addItem(product, quantity)}
+            className="rounded bg-gray-900 px-4 py-2 font-medium text-white hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            Add to cart
+          </button>
         </div>
       </div>
     </article>
