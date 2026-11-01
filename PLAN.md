@@ -70,8 +70,8 @@ Estimates are in hours. **DoD** = Definition of Done. **Status:** ⬜ to do · �
 ### Checkout
 | # | Task | Est. | Week | DoD | Status |
 |---|---|---|---|---|---|
-| 22 | Controlled form (Full name, Email, Address, City) + validation | 3h | 2 | Invalid form never submits; errors next to fields | ⬜ |
-| 23 | Local order confirmation + clear cart | 2h | 2 | "Thank you!" shown, badge back to 0 | ⬜ |
+| 22 | Controlled form (Full name, Email, Address, City) + validation | 3h | 2 | Invalid form never submits; errors next to fields | ✅ |
+| 23 | Local order confirmation + clear cart | 2h | 2 | "Thank you!" shown, badge back to 0 | ✅ |
 
 ### Orders *(FULL)*
 | # | Task | Est. | Week | DoD | Status |

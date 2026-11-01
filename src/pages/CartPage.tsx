@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router";
 import { CartLine } from "../components/cart/CartLine";
 import { useCart } from "../hooks/useCart";
-import { discountedPrice, formatPrice } from "../utils/format";
+import { formatPrice } from "../utils/format";
+import { cartSubtotal } from "../utils/cart";
 
 function CartPage() {
   const { items, clearCart } = useCart();
@@ -24,21 +25,16 @@ function CartPage() {
     );
   }
 
-  const subtotal = items.reduce(
-    (sum, item) =>
-      sum + discountedPrice(item.price, item.discountPercentage) * item.quantity,
-    0,
-  );
+  const subtotal = cartSubtotal(items);
   //sum- is what sum price we already have, item- is the current item we are iterating through, discountedPrice(item.price, item.discountPercentage) is the price of one item after discount, multiplied by item.quantity gives us the total price for that line item in the cart. We add that to sum to get the subtotal for all items in the cart.
-  //if price was 20 and added another 20, it will be 40 :D
+  //if price was 20 and added another 20, it will be 40 :D (we moved calculation to utils/cart.ts so we can use it in both pages
 
-
-  const total = subtotal; // For now, Total equals subtotal until promo code, taxes, and shipping are implemented. 
+  const total = subtotal; // For now, Total equals subtotal until promo code, taxes, and shipping are implemented.
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Cart</h1>
-      
+
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <ul className="divide-y border-t">
@@ -46,7 +42,7 @@ function CartPage() {
               <CartLine key={item.productId} item={item} /> //item is of type CartItem, which we defined in types/cart.ts and which is in CartLine component, we pass it as prop to CartLine component, which will display the item in the cart page.
             ))}
           </ul>
-          
+
           <div className="mt-6 flex justify-end">
             <button
               type="button"
@@ -60,7 +56,7 @@ function CartPage() {
 
         <aside className="rounded-lg border p-6 h-fit bg-gray-50">
           <h2 className="text-xl font-bold mb-4">Summary</h2>
-          
+
           <div className="space-y-3 pb-4 border-b">
             <div className="flex justify-between">
               <span className="text-gray-600">Subtotal</span>
