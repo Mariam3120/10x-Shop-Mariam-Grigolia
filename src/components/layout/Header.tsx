@@ -19,27 +19,28 @@ export function Header() {
   // After logging out, we navigate the user back to the home page ("/") using the navigate function.
 
   return (
-    <header>
-      <Link to="/" className="font-bold text-xl">
+    <header className="sticky top-0 z-10 border-b border-line bg-footer/90 backdrop-blur">
+      <div className="page-width flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-4">
+      <Link to="/" className="text-xl font-bold text-accent">
         10X Shop
       </Link>
 
-      <nav>
+      <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-medium">
         <NavLink
           to="/"
           end
-          className={({ isActive }) => (isActive ? "font-bold underline" : "")}
+          className={({ isActive }) => (isActive ? "text-accent" : "transition hover:text-accent-soft")}
         >
           Catalog
         </NavLink>
 
         <NavLink
           to="/cart"
-          className={({ isActive }) => (isActive ? "font-bold underline" : "")}
+          className={({ isActive }) => (isActive ? "text-accent" : "transition hover:text-accent-soft")}
         >
           Cart
           {itemCount > 0 && (
-            <span className="ml-1 rounded-full bg-gray-900 px-2 py-0.5 text-xs text-white">
+            <span className="ml-1 rounded-full bg-accent px-2 py-0.5 text-xs font-semibold text-on-accent">
               {itemCount}
             </span>
             //if itemCount is greater than 0 show the budge with the number of items in the cart, otherwise don't show anything
@@ -47,10 +48,10 @@ export function Header() {
         </NavLink>
         {user.isLoggedIn ? (
           <div className="items-center gap-4 inline-flex">
-            <span>{user.username}</span>
+            <span className="text-muted">{user.username}</span>
             <button
               onClick={handleLogout}
-              className="cursor-pointer"
+              className="btn-secondary"
               type="button"
             >
               Log out
@@ -59,14 +60,13 @@ export function Header() {
         ) : (
           <NavLink
             to="/login"
-            className={({ isActive }) =>
-              isActive ? "font-bold underline" : ""
-            }
+            className="btn-primary"
           >
             Log in
           </NavLink>
         )}
       </nav>
+      </div>
     </header>
   );
 }

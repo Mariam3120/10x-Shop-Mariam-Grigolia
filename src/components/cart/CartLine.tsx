@@ -18,22 +18,22 @@ export function CartLine({ item }: CartLineProps) {
 
   return (
     //coz cart page has UL we return li for each item in cart, so we can map through items and return CartLine for each item
-    <li className="flex flex-wrap items-center gap-4 border-b py-4">
+    <li className="flex flex-wrap items-center gap-4 border-b border-line py-4 last:border-b-0">
       <div className="flex items-center gap-4">
         <img
           src={item.thumbnail}
           alt={item.title}
-          className="h-20 w-20 rounded object-contain bg-gray-50 p-1"
+          className="h-20 w-20 rounded-lg bg-linear-to-br from-panel to-panel-deep object-contain p-1"
         />
         <div>
           <Link
             to={`/products/${item.productId}`}
             //this link takes us to the product page of individual product, where we can see more details
-            className="font-medium hover:underline"
+            className="font-medium transition hover:text-accent"
           >
             {item.title}
           </Link>
-          <p className="text-sm text-gray-500">{formatPrice(unitPrice)}</p> 
+          <p className="text-sm text-muted">{formatPrice(unitPrice)}</p> 
         </div>
       </div>
 
@@ -51,13 +51,13 @@ export function CartLine({ item }: CartLineProps) {
         */
       }
 
-      <div className="text-right font-medium">{formatPrice(lineTotal)}</div>
+      <div className="font-semibold text-accent sm:ml-auto">{formatPrice(lineTotal)}</div>
 
       <button
         type="button"
         onClick={() => removeItem(item.productId)}
         //this fnc just needs productId to remove the item from cart
-        className="text-sm text-red-500 hover:text-red-700 font-medium"
+        className="text-sm font-medium text-danger hover:underline"
       >
         Remove
       </button>

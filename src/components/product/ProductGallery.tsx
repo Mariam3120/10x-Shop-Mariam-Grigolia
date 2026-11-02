@@ -20,7 +20,7 @@ export function ProductGallery({ images, title }: ProductGalleryProps) {
       <img
         src={images[selectedIndex]}
         alt={title}
-        className="w-full h-96 object-contain bg-gray-50 rounded-lg border border-gray-100 p-4"
+        className="h-72 w-full rounded-2xl border border-line bg-linear-to-br from-panel to-panel-deep object-contain p-4 sm:h-96"
       />
       {
         /**
@@ -38,14 +38,14 @@ export function ProductGallery({ images, title }: ProductGalleryProps) {
               onClick={() => setSelectedIndex(index)}
               className={`rounded border p-1 transition-all ${
                 index === selectedIndex
-                  ? "border-gray-900 ring-1 ring-gray-900"
-                  : "border-gray-200 hover:border-gray-300"
+                  ? "border-accent ring-1 ring-accent"
+                  : "border-line hover:border-accent-soft"
               }`}
             >
               <img
                 src={image}
                 alt=""
-                className="h-16 w-16 object-contain bg-gray-50 rounded"
+                className="h-16 w-16 rounded bg-panel object-contain"
               />
             </button>
           ))}

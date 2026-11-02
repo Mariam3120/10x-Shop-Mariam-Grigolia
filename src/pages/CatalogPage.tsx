@@ -57,15 +57,18 @@ function CatalogPage() {
   //so when data is loading or there are no products yet it will crash
   //BUT!!!!the early returns aren't there to prevent a crash. products starts as [], and [].map() is safe.
   // They're there to show the right screen for each state.
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="py-16 text-center text-muted">Loading...</p>;
   //if it is loading write that message don't go down
-  if (error) return <p>{error}</p>;
+  if (error) return <p className="py-16 text-center text-danger">{error}</p>;
   //if error - write that- stop
-  if (products.length === 0) return <p>No products found.</p>;
+  if (products.length === 0) return <p className="py-16 text-center text-muted">No products found.</p>;
 
   return (
     <>
-      <h1>Catalog</h1>
+      <section className="mb-8 rounded-2xl border border-line bg-linear-to-r from-teal via-surface to-mauve/70 p-8 sm:p-12">
+        <h1 className="text-4xl font-bold sm:text-5xl">Catalog</h1>
+        <p className="mt-2 text-accent-soft">Find something you will love.</p>
+      </section>
       <ProductGrid products={products} />
       {/* THAT before {products.map((product) => (
         <p key={product.id}>{product.title}  was before we created beautidul productCard and created component product grid which places all products into catalog page

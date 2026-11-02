@@ -75,7 +75,7 @@ function CheckoutPage() {
     return (
       <div className="mx-auto max-w-md py-16 text-center">
         <h1 className="text-3xl font-bold mb-4">Thank you! Your order has been placed.</h1>
-        <p className="text-gray-600">Total paid: {formatPrice(orderTotal)}</p>
+        <p className="text-muted">Total paid: {formatPrice(orderTotal)}</p>
       </div>
     );
   }
@@ -84,7 +84,7 @@ function CheckoutPage() {
   //coz if there are no items no need to be on checkout page
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="mx-auto flex max-w-md flex-col gap-4 py-8">
+    <form onSubmit={handleSubmit} noValidate className="mx-auto flex max-w-lg flex-col gap-4 rounded-2xl border border-line bg-surface p-6 sm:p-8">
       <h1 className="text-3xl font-bold mb-2">Checkout</h1>
 
       <div className="flex flex-col gap-1">
@@ -95,9 +95,9 @@ function CheckoutPage() {
           type="text"
           value={form.fullName}//contolled component, so we set value to form.fullName, so it reflects the current state of the form
           onChange={handleChange}//when user click it turns on and renews setForm state, so we can see what user types in the field
-          className="rounded border p-2"
+          className="field"
         />
-        {errors.fullName && <span className="text-xs text-red-500">{errors.fullName}</span>}
+        {errors.fullName && <span className="text-sm text-danger">{errors.fullName}</span>}
       </div>
 
       <div className="flex flex-col gap-1">
@@ -108,9 +108,9 @@ function CheckoutPage() {
           type="email"
           value={form.email}
           onChange={handleChange}
-          className="rounded border p-2"
+          className="field"
         />
-        {errors.email && <span className="text-xs text-red-500">{errors.email}</span>}
+        {errors.email && <span className="text-sm text-danger">{errors.email}</span>}
       </div>
 
       <div className="flex flex-col gap-1">
@@ -121,9 +121,9 @@ function CheckoutPage() {
           type="text"
           value={form.address}
           onChange={handleChange}
-          className="rounded border p-2"
+          className="field"
         />
-        {errors.address && <span className="text-xs text-red-500">{errors.address}</span>}
+        {errors.address && <span className="text-sm text-danger">{errors.address}</span>}
       </div>
 
       <div className="flex flex-col gap-1">
@@ -134,19 +134,19 @@ function CheckoutPage() {
           type="text"
           value={form.city}
           onChange={handleChange}
-          className="rounded border p-2"
+          className="field"
         />
-        {errors.city && <span className="text-xs text-red-500">{errors.city}</span>}
+        {errors.city && <span className="text-sm text-danger">{errors.city}</span>}
       </div>
 
-      <div className="flex justify-between items-center py-2 text-lg font-bold border-t border-b mt-2">
+      <div className="mt-2 flex items-center justify-between border-y border-line py-3 text-lg font-bold">
         <span>Total:</span>
         <span>{formatPrice(total)}</span>
       </div>
 
       <button
         type="submit"
-        className="rounded bg-gray-900 px-4 py-3 font-medium text-white hover:bg-gray-700 text-center"
+        className="btn-primary w-full"
       >
         Place order
       </button>
