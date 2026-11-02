@@ -15,7 +15,7 @@ export function QuantityStepper({ quantity, max, onChange,}: QuantityStepperProp
         aria-label="Decrease quantity"
         disabled={quantity <= 1}
         onClick={() => onChange(quantity - 1)}
-        className="flex h-9 w-9 items-center justify-center rounded-full border border-line transition enabled:hover:border-accent enabled:hover:text-accent disabled:cursor-not-allowed disabled:opacity-40"
+        className="flex h-11 w-11 items-center justify-center rounded-full border border-line transition enabled:hover:border-accent enabled:hover:text-accent disabled:cursor-not-allowed disabled:opacity-40"
       >
         −
       </button>
@@ -31,7 +31,7 @@ export function QuantityStepper({ quantity, max, onChange,}: QuantityStepperProp
         onClick={() => onChange(quantity + 1)}
         //inside QuantityStepper onCHange - in real is setQuantity fnc, when user click - it turns onClick={() => onChange(quantity - 1)} so 
         // in real it is: setQuantity(quantity + 1)
-        className="flex h-9 w-9 items-center justify-center rounded-full border border-line transition enabled:hover:border-accent enabled:hover:text-accent disabled:cursor-not-allowed disabled:opacity-40"
+        className="flex h-11 w-11 items-center justify-center rounded-full border border-line transition enabled:hover:border-accent enabled:hover:text-accent disabled:cursor-not-allowed disabled:opacity-40"
       >
         +
       </button>

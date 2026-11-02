@@ -35,7 +35,7 @@ export function Header() {
             to="/"
             end
             className={({ isActive }) =>
-              isActive ? "text-accent" : "transition hover:text-accent-soft"
+              `inline-flex min-h-11 items-center ${isActive ? "text-accent" : "transition hover:text-accent-soft"}`
             }
           >
             Catalog
@@ -44,7 +44,7 @@ export function Header() {
           <NavLink
             to="/cart"
             className={({ isActive }) =>
-              isActive ? "text-accent" : "transition hover:text-accent-soft"
+              `inline-flex min-h-11 items-center ${isActive ? "text-accent" : "transition hover:text-accent-soft"}`
             }
           >
             Cart
