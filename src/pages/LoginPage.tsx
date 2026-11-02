@@ -137,7 +137,7 @@ function LoginPage() {
 
       <button type="submit" className="btn-primary mt-2 w-full">Log In</button>
 
-      <Link to="/" className="text-center text-sm text-muted transition hover:text-accent">
+      <Link to="/" className="py-3 text-center text-sm text-muted transition hover:text-accent">
         ← Back to catalog
       </Link>
     </form>

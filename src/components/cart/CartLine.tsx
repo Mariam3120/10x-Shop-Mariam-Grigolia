@@ -57,7 +57,7 @@ export function CartLine({ item }: CartLineProps) {
         type="button"
         onClick={() => removeItem(item.productId)}
         //this fnc just needs productId to remove the item from cart
-        className="text-sm font-medium text-danger hover:underline"
+        className="min-h-11 px-2 text-sm font-medium text-danger hover:underline"
       >
         Remove
       </button>
