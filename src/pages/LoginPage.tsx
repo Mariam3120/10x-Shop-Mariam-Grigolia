@@ -103,33 +103,42 @@ function LoginPage() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="username">Username</label>
+    <form
+      onSubmit={handleSubmit}
+      className="mx-auto flex max-w-md flex-col gap-3 rounded-2xl border border-line bg-surface p-6 sm:p-8"
+    >
+      <h1 className="mb-2 text-3xl font-bold">Log in</h1>
+
+      <label htmlFor="username" className="text-sm font-medium">Username</label>
       <input
         id="username"
         name="username"
+        className="field"
         value={values.username}
         onChange={handleChange}
       />
       {errors.username && (
-        <p className="mt-1 text-sm text-red-600">{errors.username}</p>
+        <p className="text-sm text-danger">{errors.username}</p>
       )}
 
-      <label htmlFor="password">Password</label>
+      <label htmlFor="password" className="text-sm font-medium">Password</label>
       <input
         id="password"
         name="password"
+        className="field"
         type="password"
         value={values.password}
         onChange={handleChange}
       />
       {errors.password && (
-        <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+        <p className="text-sm text-danger">{errors.password}</p>
       )}
 
-      <button type="submit">Log In</button>
+      <button type="submit" className="btn-primary mt-2 w-full">Log In</button>
 
-      <Link to="/">← Back to catalog</Link>
+      <Link to="/" className="text-center text-sm text-muted transition hover:text-accent">
+        ← Back to catalog
+      </Link>
     </form>
   );
 }

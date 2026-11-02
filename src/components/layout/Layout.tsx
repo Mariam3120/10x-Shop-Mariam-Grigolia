@@ -11,15 +11,15 @@ export function Layout() {
   // ErrorBoundary with hasError: false. Without it, the fallback stays after navigating.
 
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       <ScrollToTop />
       <Header />
-      <main>
+      <main className="page-width flex-1 py-8">
         <ErrorBoundary key={location.pathname}>
           <Outlet />
         </ErrorBoundary>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

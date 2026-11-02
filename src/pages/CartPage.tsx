@@ -14,10 +14,10 @@ function CartPage() {
     return (
       <div className="mx-auto max-w-2xl py-16 text-center">
         <h1 className="text-3xl font-bold mb-4">Cart</h1>
-        <p className="text-gray-600 mb-6">Your cart is empty.</p>
+        <p className="mb-6 text-muted">Your cart is empty.</p>
         <Link
           to="/" //sends back to home page where are products
-          className="inline-block rounded bg-gray-900 px-6 py-2.5 font-medium text-white hover:bg-gray-700"
+          className="btn-primary"
         >
           Browse products
         </Link>
@@ -32,12 +32,12 @@ function CartPage() {
   const total = subtotal; // For now, Total equals subtotal until promo code, taxes, and shipping are implemented.
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
+    <div className="w-full">
       <h1 className="text-3xl font-bold mb-8">Cart</h1>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <ul className="divide-y border-t">
+          <ul className="rounded-2xl border border-line bg-surface px-4">
             {items.map((item) => (
               <CartLine key={item.productId} item={item} /> //item is of type CartItem, which we defined in types/cart.ts and which is in CartLine component, we pass it as prop to CartLine component, which will display the item in the cart page.
             ))}
@@ -47,19 +47,19 @@ function CartPage() {
             <button
               type="button"
               onClick={clearCart}
-              className="rounded border border-red-300 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+              className="btn-secondary text-sm"
             >
               Clear cart
             </button>
           </div>
         </div>
 
-        <aside className="rounded-lg border p-6 h-fit bg-gray-50">
+        <aside className="h-fit rounded-2xl border border-line bg-surface p-6">
           <h2 className="text-xl font-bold mb-4">Summary</h2>
 
-          <div className="space-y-3 pb-4 border-b">
+          <div className="space-y-3 border-b border-line pb-4">
             <div className="flex justify-between">
-              <span className="text-gray-600">Subtotal</span>
+              <span className="text-muted">Subtotal</span>
               <span className="font-medium">{formatPrice(subtotal)}</span>
             </div>
           </div>
@@ -72,7 +72,7 @@ function CartPage() {
           <button
             type="button"
             onClick={() => navigate("/checkout")}
-            className="w-full mt-4 rounded bg-gray-900 px-4 py-3 font-medium text-white hover:bg-gray-700 text-center"
+            className="btn-primary mt-4 w-full"
           >
             Proceed to checkout
           </button>

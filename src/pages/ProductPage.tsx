@@ -72,8 +72,8 @@ function ProductPage() {
   //it's like: watch when one of these values changes and give this code again when it changes
 
   if (!isValidId) return <NotFoundPage />;
-  if (loading) return <p className="text-center py-12">Loading…</p>;
-  if (error) return <p className="text-center py-12 text-red-500">{error}</p>;
+  if (loading) return <p className="py-16 text-center text-muted">Loading…</p>;
+  if (error) return <p className="py-16 text-center text-danger">{error}</p>;
 
   //if product can;t be found we show not found page again
   if (!product) return <NotFoundPage />;
@@ -83,7 +83,7 @@ function ProductPage() {
   //Why after !product? Above that line, product might be null, so product.price would be a TypeScript error. Below it, the page has already returned NotFound for null, so TypeScript knows product is a real product.
 
   return (
-    <article className="container mx-auto px-4 py-8 max-w-4xl">
+    <article className="mx-auto max-w-5xl">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         <ProductGallery
           key={product.id} //we need key here coz if e move from prod 1 to prod 2 it's totally new comp
@@ -94,24 +94,24 @@ function ProductPage() {
         />
 
         <div className="flex flex-col gap-4">
-          <span className="text-sm text-gray-500 uppercase tracking-wide">
+          <span className="text-sm tracking-wide text-muted uppercase">
             {product.category} {product.brand && `· ${product.brand}`}
           </span>
-          <h1 className="text-3xl font-bold text-gray-900">{product.title}</h1>
-          <p className="text-gray-600 leading-relaxed">{product.description}</p>
+          <h1 className="text-3xl font-bold">{product.title}</h1>
+          <p className="leading-relaxed text-muted">{product.description}</p>
           <div className="mt-2 flex items-center gap-3">
-            <span className="text-2xl font-bold text-gray-900">
+            <span className="text-2xl font-bold text-accent">
               {formatPrice(finalPrice)}
             </span>
 
             {hasDiscount && (
-              <span className="text-gray-400 line-through">
+              <span className="text-muted line-through">
                 {formatPrice(product.price)}
               </span>
             )}
 
             {hasDiscount && (
-              <span className="rounded bg-green-100 px-2 py-0.5 text-sm font-semibold text-green-700">
+              <span className="rounded-full bg-success/15 px-2 py-0.5 text-sm font-semibold text-success">
                 −{Math.round(product.discountPercentage)}%
               </span>
             )}
@@ -123,14 +123,14 @@ function ProductPage() {
               onChange={setQuantity}
             />
           ) : (
-            <p className="font-medium text-red-500">Out of stock</p>
+            <p className="font-medium text-danger">Out of stock</p>
           )}
           <button
             type="button"
             disabled={product.stock === 0}
             //if prod is not in the stock we disable the button
             onClick={() => addItem(product, quantity)}
-            className="rounded bg-gray-900 px-4 py-2 font-medium text-white hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-40"
+            className="btn-primary mt-2 sm:self-start"
           >
             Add to cart
           </button>
