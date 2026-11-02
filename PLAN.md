@@ -31,7 +31,7 @@ Estimates are in hours. **DoD** = Definition of Done. **Status:** ⬜ to do · �
 | 4 | Core types (`Product`, `ProductsResponse`, `CartItem`, `CartState`, `AuthUser`, `LoginFormValues`, `CheckoutFormValues`) | 2h | 1 | All models live in `types/`, used by real code | ✅ |
 | 5 | Error Boundary | 2h | 3 | A thrown test error shows the fallback, not a blank page | ✅ |
 | 6 | Responsive pass + hover/focus/disabled states | 4h | 3 | All CORE pages work at 375px with no horizontal scroll | ✅ |
-| 7 | Full flow test (guest + logged-in) | 2h | 3 | Catalog → Product → Cart → Login → Checkout → Confirmation works | ⬜ |
+| 7 | Full flow test (guest + logged-in) | 2h | 3 | Catalog → Product → Cart → Login → Checkout → Confirmation works | ✅ |
 
 ### Layout & Routing
 | # | Task | Est. | Week | DoD | Status |
