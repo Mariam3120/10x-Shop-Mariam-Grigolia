@@ -26,7 +26,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-10 border-b border-line bg-footer/90 backdrop-blur">
       <div className="page-width flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-4">
-        <Link to="/" className="text-xl font-bold text-accent">
+        <Link to="/" className="font-display text-xl font-bold text-accent">
           10X Shop
         </Link>
 

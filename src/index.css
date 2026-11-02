@@ -3,6 +3,7 @@
 /* Design tokens: every color lives here, so a light theme only has to change this list */
 @theme {
   --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Cinzel", Georgia, serif;
 
   /* backgrounds */
   --color-page: #281e37;
@@ -21,7 +22,13 @@
   /* text and lines */
   --color-ink: #f7f3fa;
   --color-muted: #cbbfd3;
-  --color-line: #4d3f63;
+  --color-line: #7a6440;
+
+  /* loot rarity */
+  --color-legendary: #ff9d3c;
+  --color-epic: #c98bff;
+  --color-rare: #6db8ff;
+  --color-uncommon: #7fe08a;
 
   /* status */
   --color-danger: #ff9f9f;
@@ -33,7 +40,7 @@
   body {
     background-color: var(--color-page);
     color: var(--color-ink);
-    font-family: var(--font-sans);
+    font-family: var(--font-display);
   }
 
   :focus-visible {
@@ -60,6 +67,13 @@
   @media (min-width: 64rem) {
     padding-inline: 2rem;
   }
+}
+
+/* Small gold line for the WoW phrases */
+@utility wow-phrase {
+  color: var(--color-accent);
+  font-size: 1.125rem;
+  font-weight: 600;
 }
 
 @utility btn-primary {

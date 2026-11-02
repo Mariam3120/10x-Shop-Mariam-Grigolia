@@ -43,6 +43,7 @@ export class ErrorBoundary extends Component<
       return (
         <div className="flex flex-col items-center justify-center min-h-[50vh] p-6 text-center">
           <h1 className="text-2xl font-bold mb-2">Something went wrong.</h1>
+          <p className="wow-phrase">Lok'tar ogar!</p>
           <p className="mb-4 text-muted">
             An unexpected error occurred on this page.
           </p>

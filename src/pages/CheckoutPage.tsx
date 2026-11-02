@@ -75,6 +75,7 @@ function CheckoutPage() {
     return (
       <div className="mx-auto max-w-md py-16 text-center">
         <h1 className="text-3xl font-bold mb-4">Thank you! Your order has been placed.</h1>
+        <p className="wow-phrase mb-4">Work complete!</p>
         <p className="text-muted">Total paid: {formatPrice(orderTotal)}</p>
       </div>
     );
@@ -85,7 +86,8 @@ function CheckoutPage() {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="mx-auto flex max-w-lg flex-col gap-4 rounded-2xl border border-line bg-surface p-6 sm:p-8">
-      <h1 className="text-3xl font-bold mb-2">Checkout</h1>
+      <h1 className="text-3xl font-bold">Checkout</h1>
+      <p className="wow-phrase">Time is money, friend!</p>
 
       <div className="flex flex-col gap-1">
         <label htmlFor="fullName" className="font-medium text-sm">Full Name</label>

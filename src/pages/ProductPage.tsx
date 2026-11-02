@@ -7,6 +7,7 @@ import { discountedPrice, formatPrice } from "../utils/format";
 import { ProductGallery } from "../components/product/ProductGallery";
 import { QuantityStepper } from "../components/product/QuantityStepper";
 import { useCart } from "../hooks/useCart";
+import { rarityColor } from "../utils/rarity";
 
 function ProductPage() {
   const { addItem } = useCart();
@@ -97,7 +98,9 @@ function ProductPage() {
           <span className="text-sm tracking-wide text-muted uppercase">
             {product.category} {product.brand && `· ${product.brand}`}
           </span>
-          <h1 className="text-3xl font-bold">{product.title}</h1>
+          <h1 className={`text-3xl font-bold ${rarityColor(product.rating)}`}>
+            {product.title}
+          </h1>
           <p className="leading-relaxed text-muted">{product.description}</p>
           <div className="mt-2 flex items-center gap-3">
             <span className="text-2xl font-bold text-accent">
