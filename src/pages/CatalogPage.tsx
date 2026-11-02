@@ -67,7 +67,9 @@ function CatalogPage() {
     <>
       <section className="mb-8 rounded-2xl border border-line bg-linear-to-r from-teal via-surface to-mauve/70 p-8 sm:p-12">
         <h1 className="text-4xl font-bold sm:text-5xl">Catalog</h1>
-        <p className="mt-2 text-accent-soft">Find something you will love.</p>
+        <p className="mt-3 text-lg text-accent-soft sm:text-xl">
+          <span className="text-2xl font-bold text-accent sm:text-3xl">Zug zug!</span> Choose your loot.
+        </p>
       </section>
       <ProductGrid products={products} />
       {/* THAT before {products.map((product) => (

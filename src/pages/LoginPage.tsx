@@ -107,7 +107,8 @@ function LoginPage() {
       onSubmit={handleSubmit}
       className="mx-auto flex max-w-md flex-col gap-3 rounded-2xl border border-line bg-surface p-6 sm:p-8"
     >
-      <h1 className="mb-2 text-3xl font-bold">Log in</h1>
+      <h1 className="text-3xl font-bold">Log in</h1>
+      <p className="wow-phrase">You are not prepared!</p>
 
       <label htmlFor="username" className="text-sm font-medium">Username</label>
       <input

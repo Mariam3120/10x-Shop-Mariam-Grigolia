@@ -14,7 +14,8 @@ function CartPage() {
     return (
       <div className="mx-auto max-w-2xl py-16 text-center">
         <h1 className="text-3xl font-bold mb-4">Cart</h1>
-        <p className="mb-6 text-muted">Your cart is empty.</p>
+        <p className="text-muted">Your cart is empty.</p>
+        <p className="wow-phrase mb-6">Something need doing?</p>
         <Link
           to="/" //sends back to home page where are products
           className="btn-primary"

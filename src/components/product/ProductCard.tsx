@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import type { Product } from "../../types/product";
 import { discountedPrice, formatPrice } from "../../utils/format";
+import { rarityColor } from "../../utils/rarity";
 
 interface ProductCardProps {
   product: Product;
@@ -36,7 +37,7 @@ export function ProductCard({ product }: ProductCardProps) {
       {
         //link is analogy of <a> img or title must be clickable
       }
-      <Link to={`/products/${product.id}`}>
+      <Link to={`/products/${product.id}`} className="relative block">
         <img
           src={product.thumbnail}
           alt={product.title}
@@ -45,15 +46,23 @@ export function ProductCard({ product }: ProductCardProps) {
           height={300}
           className="h-48 w-full rounded-xl bg-linear-to-br from-panel to-panel-deep object-contain p-3"
         />
+        <span
+          aria-hidden="true"
+          className="wow-phrase absolute inset-x-2 text-sm! top-2 rounded-full bg-footer/90 px-2 py-1 text-center opacity-0 transition group-hover:opacity-100"
+        >
+          What business have you?
+        </span>
 
-        <h2 className="mt-3 font-semibold transition group-hover:text-accent">{product.title}</h2>
+        <h2 className={`mt-3 font-semibold ${rarityColor(product.rating)}`}>
+          {product.title}
+        </h2>
       </Link>
       {
         //Category and ?brand
         //&&-means if the left side exists, is true then show the right :) so if product will have brand it will show, if not it won;t crush
         //here if brand is : we take stop . and connect it to brand name (if it'n not there then nothing will be painted)
       }
-      <div className="mt-1 text-xs text-muted capitalize">
+      <div className="mt-1 font-sans text-xs text-muted capitalize">
         {product.category} {product.brand && `· ${product.brand}`}
       </div>
       {
@@ -84,7 +93,7 @@ export function ProductCard({ product }: ProductCardProps) {
         )}
       </div>
 
-      <div className="mt-auto flex items-center justify-between border-t border-line pt-3 text-sm">
+      <div className="mt-auto flex items-center justify-between border-t border-line pt-3 font-sans text-sm">
         <span className="font-medium text-accent-soft">★ {product.rating.toFixed(1)}</span>
         <span className={`font-medium ${stockColor}`}>{stockText}</span>
       </div>
