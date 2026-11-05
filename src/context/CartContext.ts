@@ -7,7 +7,7 @@ import type { Product } from "../types/product";
 export interface CartContextValue {
   items: CartItem[];
   itemCount: number; // total units, for the Header badge
-  addItem: (product: Product, quantity: number) => void;
+  addItem: (product: Product, quantity: number) => boolean; //so it returns true if added and false if stock is exceeded
   removeItem: (productId: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
   clearCart: () => void;
