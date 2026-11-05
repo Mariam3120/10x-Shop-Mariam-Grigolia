@@ -5,12 +5,11 @@ import type { Product } from "../types/product";
 
 // The CartProvider component is responsible for managing the state of the shopping cart and providing it to the rest of the application through the CartContext.
 
-
 const STORAGE_KEY = "shop_cart";
 //this variable is used to store the cart data in the browser's localStorage, allowing the cart to persist across page reloads and sessions.
 
-//this fnc down loadCart(): CartItem[] is only allowed to return cartItem type array, and it is used to load the cart data from localStorage 
-// when the CartProvider component is first rendered. It tries to retrieve the saved cart data from localStorage using the STORAGE_KEY. 
+//this fnc down loadCart(): CartItem[] is only allowed to return cartItem type array, and it is used to load the cart data from localStorage
+// when the CartProvider component is first rendered. It tries to retrieve the saved cart data from localStorage using the STORAGE_KEY.
 // If there is no saved data or if an error occurs during parsing, it returns an empty array, indicating that the cart is initially empty
 //CREATED before provider, because we need to load cart data before provider is created, so that provider can use it as initial state.
 function loadCart(): CartItem[] {
@@ -30,7 +29,7 @@ function loadCart(): CartItem[] {
   }
 }
 
-//children is a special prop in React that allows components to pass elements or components as children to other components. 
+//children is a special prop in React that allows components to pass elements or components as children to other components.
 //a.g <CartProvider><Header /><Main /></CartProvider> (reactNode means any valid react element, like component, html tag, text, etc)
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>(loadCart);
@@ -50,20 +49,33 @@ export function CartProvider({ children }: { children: ReactNode }) {
     //existing variable checks if the product is already in the cart
     //left side is the item in the cart, right side is the product we want to add, if they match, it means the product is already in the cart.
     //product.id is in Product type, and item.productId is in CartItem type!so we can compare them.(when we create new CarItem we use productId = product.id)
+    const inCart = existing ? existing.quantity : 0; // inCart = how many of this product are already in the cart (0 if it's new)
+
+    if (inCart + quantity > product.stock) {
+      return false; // more than stock: add nothing
+    }
+    // Stock check BEFORE changing anything: if cart amount + new amount is more than stock,
+    // we add nothing and return false, so the button can show "No more in stock".
+    // Before, Math.min silently cut the amount, and the user never knew why.
 
     if (existing) {
       setItems(
-        items.map((item) =>
-          item.productId === product.id
-            ? { ...item, quantity: Math.min(item.quantity + quantity, item.stock) }
-            : item
-            //if exists we spread item with it's old properties and update the quantity, item.quantity + quantity takes what's in cart and adds new quantitu
-            //Math.min(item.quantity + quantity, item.stock)ensures that the quantity does not exceed the available stock of product.(math min takes the smaller value of two numbers)
-            //like if user added3 shirts and in stock are 5, and added another 4 shirts, it will only add 2 more shirts to reach the stock limit of 5.
-        )
+        items.map(
+          (item) =>
+            item.productId === product.id
+              ? { ...item, quantity: item.quantity + quantity }
+              : item,
+          // Just add the new amount to the old one. We no longer need Math.min here,
+          // because the check above already guarantees the total fits in stock.
+          // ...item copies the old object, so the update stays immutable.
+
+          //if exists we spread item with it's old properties and update the quantity, item.quantity + quantity takes what's in cart and adds new quantitu
+          //Math.min(item.quantity + quantity, item.stock)ensures that the quantity does not exceed the available stock of product.(math min takes the smaller value of two numbers)
+          //like if user added3 shirts and in stock are 5, and added another 4 shirts, it will only add 2 more shirts to reach the stock limit of 5.
+        ),
       );
     } else {
-    //if new item we add at the end of the array, we create a new CartItem object with the product's details 
+      //if new item we add at the end of the array, we create a new CartItem object with the product's details
       const newItem: CartItem = {
         productId: product.id,
         title: product.title,
@@ -72,10 +84,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
         thumbnail: product.thumbnail,
         stock: product.stock,
         quantity,
-        
       };
       setItems([...items, newItem]);
     }
+
+    return true; // Reaching this line means the item was added, so we report success.
   }
 
   function removeItem(productId: number) {
@@ -83,23 +96,22 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }
   //filter coz it returns new array with all items that do not match the productId, effectively removing the item from cart
   //it meand take all items which id is not equal to deleting productId and return new array with them, and set it as new state.
- // here we don;t need product.id -thw shole product object, we just need cartItems's productId to identify which item to remove from the cart.
- //function gets productId as argument, which is the id of the product we want to remove from the cart.
- //that specific item.productId means item in card which is compared to productId we want to remove, if they are not equal, it will be kept in the new array, if they are equal, it will be removed from the new array.
+  // here we don;t need product.id -thw shole product object, we just need cartItems's productId to identify which item to remove from the cart.
+  //function gets productId as argument, which is the id of the product we want to remove from the cart.
+  //that specific item.productId means item in card which is compared to productId we want to remove, if they are not equal, it will be kept in the new array, if they are equal, it will be removed from the new array.
 
   function updateQuantity(productId: number, quantity: number) {
     // ვუცვლით რაოდენობას და ვიცავთ საზღვრებს (1-დან stock-მდე)
     setItems(
       items.map((item) =>
         item.productId === productId
-      //item.productId is the id of the item in the cart, productId is the id of the product we want to update, if they match, it means we found the item we want to update.
-          ? { ...item, quantity: Math.min(Math.max(quantity, 1), item.stock) }
-          //Math.max(quantity, 1) ensures that the quantity is at least 1, so user can't set it to 0 or negative number.
-          //Math.min(Math.max(...), item.stock) ensures that the quantity does not exceed the available stock of product.
-          : item
-      )
+          ? //item.productId is the id of the item in the cart, productId is the id of the product we want to update, if they match, it means we found the item we want to update.
+            { ...item, quantity: Math.min(Math.max(quantity, 1), item.stock) }
+          : //Math.max(quantity, 1) ensures that the quantity is at least 1, so user can't set it to 0 or negative number.
+            //Math.min(Math.max(...), item.stock) ensures that the quantity does not exceed the available stock of product.
+            item,
+      ),
     );
-
   }
 
   function clearCart() {
@@ -112,7 +124,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   return (
     <CartContext.Provider
-      value={{ items, itemCount, addItem, removeItem, updateQuantity, clearCart }}
+      value={{
+        items,
+        itemCount,
+        addItem,
+        removeItem,
+        updateQuantity,
+        clearCart,
+      }}
     >
       {children}
     </CartContext.Provider>
