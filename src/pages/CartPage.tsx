@@ -101,6 +101,7 @@ function CartPage() {
                     id="promo"
                     value={codeInput}
                     onChange={(e) => setCodeInput(e.target.value)}
+                    placeholder="Try 10X10"
                     className="field"
                   />
                   <button type="submit" className="btn-secondary">
