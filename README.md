@@ -93,5 +93,5 @@ Login is a local simulation, so no real account is needed. Any username with a p
 - Product data: [DummyJSON](https://dummyjson.com)
 - Fonts: Cinzel and Poppins from Google Fonts
 - Game phrases are short references to World of Warcraft by Blizzard Entertainment. This project is not affiliated with Blizzard.
-- Claude (Anthropic) was used as an AI mentor. See the AI section in [REPORT.md](REPORT.md).
-- TODO: add your lecturer, classmates or anyone else who helped you.
+- Documentation: [react.dev](https://react.dev) and the official docs of the tools above
+- AI help: Claude (Anthropic) as a mentor, Gemini and Google's AI for double-checking code and discussing logic. See the AI section in [REPORT.md](REPORT.md).

@@ -61,26 +61,29 @@
 
 | Metric | Value |
 |---|---|
-| Commits on `main` | 66, on 11 different days (Oct 19 – Nov 6) |
-| Merged pull requests | 15 |
-| Closed Issues | TODO: check the count on GitHub |
-| JS bundle | 280.97 kB (87.90 kB gzip) |
-| CSS bundle | 25.66 kB (5.54 kB gzip) |
+| Commits on `main` | 72, on 11 different days (Oct 19 – Nov 6) |
+| Merged pull requests | 18 |
+| Closed Issues | 15 |
+| JS bundle | 282.68 kB (88.35 kB gzip) |
+| CSS bundle | 25.71 kB (5.56 kB gzip) |
 | Lighthouse before / after | Not measured yet (FULL) |
 
 ### Hours by epic
-Estimates come from `PLAN.md`. TODO: fill in the real hours.
+The plan column comes from `PLAN.md`. I did not track my time precisely, so the real column is a rough estimate.
 
-| Epic | Estimated | Real |
+| Epic | Planned | Real (approx.) |
 |---|---|---|
-| Setup & quality | 14h | TODO |
-| Layout & routing | 5h | TODO |
-| Auth | 6h | TODO |
-| Catalog | 7h | TODO |
-| Product | 6h | TODO |
-| Cart | 6h | TODO |
-| Checkout | 5h | TODO |
-| Docs & deploy | 8h | TODO |
+| Setup & quality | 14h | ~12h |
+| Layout & routing | 5h | ~5h |
+| Auth | 6h | ~7h |
+| Catalog | 7h | ~8h |
+| Product | 6h | ~7h |
+| Cart | 6h | ~8h |
+| Checkout | 5h | ~5h |
+| Design (not in the plan) | – | ~5h |
+| Docs & deploy | 8h | ~4h |
+
+The cart took longer than planned because of the stock rules and the promo code. Design was not in the original plan at all.
 
 ## 3 Hardest Problems
 
@@ -97,10 +100,10 @@ Estimates come from `PLAN.md`. TODO: fill in the real hours.
 
 ## AI Usage
 
-TODO: read and adjust these lines so they match your own experience.
-
 - I used Claude (Anthropic) as a mentor: it explained concepts, gave me TODO-style starter code, and reviewed what I wrote. I typed the feature code myself.
 - I let it do mechanical work: the named-exports refactor, the design and WoW styling, the first `PLAN.md` draft, and the first drafts of these docs.
 - It reproduced the logout bug with a headless Chrome script and suggested the `startTransition` fix, which I tested and committed.
 - I made the decisions myself, sometimes against its first idea: no burger menu (the PRD allows a second row), `useState` for the cart before the FULL reducer, and React Router 7 instead of 8 because of my Node version.
 - It made mistakes too: it suggested the deprecated `FormEvent` type, and missed two CORE requirements until we re-checked the PRD.
+- I used Gemini to double-check parts of my code, and Google's AI to discuss TypeScript logic and how some functions work.
+- For official explanations I used the documentation, such as [react.dev](https://react.dev).
