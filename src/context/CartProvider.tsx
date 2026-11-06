@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { CartContext } from "./CartContext";
-import type { CartItem } from "../types/cart";
+import type { CartItem, CartState } from "../types/cart";
+import { PROMO_CODE } from "../utils/cart";
 import type { Product } from "../types/product";
 
 // The CartProvider component is responsible for managing the state of the shopping cart and providing it to the rest of the application through the CartContext.
@@ -8,23 +9,34 @@ import type { Product } from "../types/product";
 const STORAGE_KEY = "shop_cart";
 //this variable is used to store the cart data in the browser's localStorage, allowing the cart to persist across page reloads and sessions.
 
+const EMPTY_CART: CartState = { items: [], promoCode: null };
+
 //this fnc down loadCart(): CartItem[] is only allowed to return cartItem type array, and it is used to load the cart data from localStorage
 // when the CartProvider component is first rendered. It tries to retrieve the saved cart data from localStorage using the STORAGE_KEY.
 // If there is no saved data or if an error occurs during parsing, it returns an empty array, indicating that the cart is initially empty
 //CREATED before provider, because we need to load cart data before provider is created, so that provider can use it as initial state.
-function loadCart(): CartItem[] {
+function loadCart(): CartState {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     //go to browser localStorage and get the value by key STORAGE_KEY, which is "shop_cart" and assign it to saved variable.
-    if (saved === null) return [];
+    if (saved === null) return EMPTY_CART;
     //if it is empty or user first time entered and there is no value in localStorage, return empty array.
     const parsed: unknown = JSON.parse(saved);
     //unknown type is used when we don't know the type of a value, and we want to perform some checks or assertions before using it.
     //in localStorage everythin is saved as string, so we need to parse it to get the original data structure back.(when we read back)
     // JSON.parse converts the JSON string back into a JavaScript object or array
-    return Array.isArray(parsed) ? parsed : [];
+    if (Array.isArray(parsed)) return { items: parsed, promoCode: null };   // Old format: just an array of items (before the promo code existed)
+
+    // New format: { items, promoCode }
+    if (typeof parsed === "object" && parsed !== null && "items" in parsed && Array.isArray(parsed.items)) {
+      const promoCode =
+        "promoCode" in parsed && typeof parsed.promoCode === "string" ? parsed.promoCode : null;
+      return { items: parsed.items, promoCode };
+    }
+     return EMPTY_CART;
+
   } catch {
-    return [];
+     return EMPTY_CART;
     //sometimes text can be damaged or not in correct format, so we need to catch the error and return empty array.
   }
 }
@@ -32,16 +44,18 @@ function loadCart(): CartItem[] {
 //children is a special prop in React that allows components to pass elements or components as children to other components.
 //a.g <CartProvider><Header /><Main /></CartProvider> (reactNode means any valid react element, like component, html tag, text, etc)
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>(loadCart);
+  const [items, setItems] = useState<CartItem[]>(() => loadCart().items);
+  const [promoCode, setPromoCode] = useState<string | null>(() => loadCart().promoCode);
+
   //items-current state of the cart, setItems-function to update the state
   //this state will be <CartItem[]> type, which is an array of CartItem objects, (loadCart) is state's staerter value
   //  which is loaded from localStorage by loadCart() function.
   //so it will be the type CartItem but take value from what loadCart() returns!!!
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ items, promoCode }));
     //it's like autosave, every time items state changes, we save the new state to localStorage by converting it to a JSON string using JSON.stringify.
-  }, [items]);
+  }, [items, promoCode]);
   //[items] means change when items state changes, run the effect function, which saves the new state to localStorage.
 
   function addItem(product: Product, quantity: number) {
@@ -114,9 +128,22 @@ export function CartProvider({ children }: { children: ReactNode }) {
     );
   }
 
+
+  function applyPromo(code: string): boolean {
+  if (code.trim().toUpperCase() !== PROMO_CODE) return false;
+  setPromoCode(PROMO_CODE);
+  return true;
+}
+
+function removePromo() {
+  setPromoCode(null);
+}
+
   function clearCart() {
     setItems([]); //clears the cart by setting the items state to an empty array, effectively removing all items from the cart.
+    setPromoCode(null);
   }
+
 
   // itemCount is a variable that calculates the total number of items in the cart by summing up the quantity of each item in the items array.
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
@@ -131,6 +158,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
         removeItem,
         updateQuantity,
         clearCart,
+        promoCode,
+        applyPromo, 
+        removePromo
       }}
     >
       {children}

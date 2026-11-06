@@ -14,7 +14,8 @@
 | Controlled Login and Checkout forms with validation | CORE | ✅ |
 | Add to cart from cards and product page, stock limits | CORE | ✅ |
 | Search, categories, sorting, pagination, URL state | FULL | ⬜ not yet |
-| Reviews, related products, promo code | FULL | ⬜ not yet |
+| Promo code `10X10` with "Invalid promo code" error | FULL | ✅ |
+| Reviews, related products | FULL | ⬜ not yet |
 | Orders, Profile, cart reducer, custom hooks | FULL | ⬜ not yet |
 
 ### TypeScript

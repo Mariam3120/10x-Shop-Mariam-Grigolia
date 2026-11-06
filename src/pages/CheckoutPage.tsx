@@ -2,7 +2,7 @@ import { useState, type ChangeEvent, type SubmitEvent } from "react";
 import { Navigate } from "react-router";
 import { useAuth } from "../hooks/useAuth";
 import { useCart } from "../hooks/useCart";
-import { cartSubtotal } from "../utils/cart";
+import { cartSubtotal, promoDiscount } from "../utils/cart";
 import { formatPrice } from "../utils/format";
 import type { ShippingInfo } from "../types/order";
 
@@ -14,7 +14,7 @@ type ShippingErrors = Partial<ShippingInfo>; // ShippingInfo is the type of the 
 
 function CheckoutPage() {
   const { user } = useAuth(); //to write user name in the form we need to get it from useAuth hook, so we can use it in the form
-  const { items, clearCart } = useCart(); //we need to get items from the cart to calculate total and clearCart to clear the cart after order is placed
+  const { items, clearCart, promoCode } = useCart(); //we need to get items from the cart to calculate total and clearCart to clear the cart after order is placed
 
   const [form, setForm] = useState<ShippingInfo>({
     fullName: user.username, // no need of user?.username ?? "" COZ ProtectedRoute also means only logged-in users reach this page
@@ -28,7 +28,8 @@ function CheckoutPage() {
   const [orderTotal, setOrderTotal] = useState<number | null>(null); //it stores order total, initially null (when order is placed it writes total price)
   const [submitting, setSubmitting] = useState(false); // true while the order is being "placed": the button is disabled, so a double click can't order twice
 
-  const total = cartSubtotal(items); //reduce function that calculates total price of items in the cart
+  const subtotal = cartSubtotal(items);
+  const total = subtotal - promoDiscount(subtotal, promoCode);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     //ts says that e is input element change event, so we can use e.target.value and e.target.name to get the value and name of the input field that is being changed

@@ -11,8 +11,11 @@ export interface CartContextValue {
   removeItem: (productId: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
   clearCart: () => void;
+  promoCode: string | null;
+  applyPromo: (code: string) => boolean; // true if the code is valid
+  removePromo: () => void;
 }
-//we created an interface which determines the shape of the context value, which will be provided to the components that consume this context. 
+//we created an interface which determines the shape of the context value, which will be provided to the components that consume this context.
 //addItem: (product: Product, quantity: number) => void; this is a function that takes a product(Product component) and quantity(number) as arguments and adds the item to the cart.
 //void doesn't return anything, it just performs the action of adding the item to the cart.
 export const CartContext = createContext<CartContextValue | null>(null);

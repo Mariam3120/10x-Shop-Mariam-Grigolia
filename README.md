@@ -26,7 +26,8 @@
 ### FULL
 - Design tokens in Tailwind `@theme`, custom utilities (`btn-primary`, `field`, `page-width`)
 - WoW inspired details: Cinzel font, gold borders, rarity colors for product titles and short game phrases
-- Planned next: search, categories, sorting, pagination, reviews, related products, promo code, orders, profile and light theme
+- Promo code `10X10` (any letter case): −10% in the cart and at checkout, saved in `shop_cart` so it survives a reload
+- Planned next: search, categories, sorting, pagination, reviews, related products, orders, profile and light theme
 
 ## Tech Stack
 
