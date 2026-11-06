@@ -65,7 +65,7 @@ Estimates are in hours. **DoD** = Definition of Done. **Status:** ⬜ to do · �
 |---|---|---|---|---|---|
 | 19 | `CartContext` (add/remove/setQuantity, immutable) + `shop_cart` | 3h | 2 | Badge updates instantly; no mutation; cart survives reload | ✅ |
 | 20 | Cart page (lines, totals, empty state, clear cart) | 3h | 2 | Totals update on every change; empty cart looks intentional | ✅ |
-| 21 | *(FULL)* Promo code `10X10` | 2h | 3 | `10X10` gives −10%; `abc` shows "Invalid promo code" | ⬜ |
+| 21 | *(FULL)* Promo code `10X10` | 2h | 3 | `10X10` gives −10%; `abc` shows "Invalid promo code" | ✅ |
 
 ### Checkout
 | # | Task | Est. | Week | DoD | Status |
