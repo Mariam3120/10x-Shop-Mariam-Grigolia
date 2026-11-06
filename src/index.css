@@ -117,6 +117,7 @@
 }
 
 @utility field {
+  font-family: var(--font-sans);
   width: 100%;
   padding: 0.625rem 0.75rem;
   border: 1px solid var(--color-line);
