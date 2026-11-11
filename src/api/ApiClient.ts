@@ -15,6 +15,10 @@ export class ApiClient {
     }
 
     const data: T = await response.json();
+    //response.json() by itself returns type any (js obj) so any means we don;t knwo what is inside
+    //since TS doesn't like any:D it stops checking, by that writing we say: even though json() says-any, still believe me
+    //coz this data has ProductsResponse type structure which we have written in advance:))))
+    //so it calms TS that received data is exactly on that form as we wanted
     return data;
   }
 }
