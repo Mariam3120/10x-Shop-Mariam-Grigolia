@@ -11,9 +11,13 @@ import { ApiError } from "./ApiError";
 //its insides will be ProductsResponse type object - and when we will call this fnc in catalog it will already know what will be returned
 //Promise<ProductsResponse> აკონტროლებს იმას, თუ რა გამოვა ფუნქციიდან (რა ტიპის დაპირებაა).
 
-export function fetchProducts(): Promise<ProductsResponse> {
-  return api.get<ProductsResponse>("/products?limit=12&skip=0");
+export const PAGE_SIZE = 12;
+
+export function fetchProducts(page: number): Promise<ProductsResponse> {
+  const skip = (page - 1) * PAGE_SIZE;
+  return api.get<ProductsResponse>(`/products?limit=${PAGE_SIZE}&skip=${skip}`);
 }
+
 //we no longer write here if !response.ok and const data coz it is in acpiClient
 
 /*

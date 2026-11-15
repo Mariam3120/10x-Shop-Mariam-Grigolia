@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { fetchProducts } from "../api/products.api";
 import type { Product } from "../types/product";
 import { ProductGrid } from "../components/product/ProductGrid";
 import { useCart } from "../hooks/useCart";
+import { useSearchParams } from "react-router";
+import { fetchProducts, PAGE_SIZE } from "../api/products.api";
+import { Pagination } from "../components/catalog/Pagination";
 
 function CatalogPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -12,6 +14,10 @@ function CatalogPage() {
   const [error, setError] = useState<string | null>(null);
   //at start when there's no error it is null, when error occurs it'll become a text
   const { addItem } = useCart();
+
+  const [searchParams, setSearchParams] = useSearchParams(); // reads URL which page to have
+  const page = Number(searchParams.get("page")) || 1; // stores the page
+  const [total, setTotal] = useState(0); //total how many products are on server a.g 194
 
   useEffect(() => {
     let ignore = false;
@@ -24,12 +30,15 @@ function CatalogPage() {
 
     async function load() {
       //since useEffect first argument can't be async we use helper func load
+      setLoading(true); //new page so we need loading state
+      setError(null); // new page we need to clean old errors
       try {
-        const data = await fetchProducts();
+        const data = await fetchProducts(page);
         if (!ignore) {
           setProducts(data.products);
           //if component is on place we arrange products taken from data into setProducts
           //როცა სერვერიდან მონაცემები წარმატებით წამოვა, setProducts(data.products) ფუნქციით მთელ ამ მასივს ვინახავთ ამ products ცვლადში.
+          setTotal(data.total);
         }
       } catch (err: unknown) {
         //when js throws error it doesn't know its type can be string or number so we tell TS unknown -not clear whar it is:)
@@ -52,8 +61,19 @@ function CatalogPage() {
     return () => {
       ignore = true;
     };
-  }, []);
-  //[]once: means: call this effect once- when this component first time appears on screen(mount)
+  }, [page]);
+  //[]once: means: call this effect once- when this component first time appears on screen(mount) - but we changed it to page- so it will run when page changes
+
+  const totalPages = Math.ceil(total / PAGE_SIZE); //Math.ceil-რომელიც მრგვალებს ციფრს ზევით (total-e.g194 / page size (12)) 194/12=16.16~17 pages in all
+
+  function handlePageChange(newPage: number) {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev); //const next = new URLSearchParams(prev); — იღებს მიმდინარე URL-ის პარამეტრებს (რომ მომავალში სხვა ფილტრები — მაგალითად კატეგორია ან ძებნა — არ დაიკარგოს).
+      next.set("page", String(newPage)); //next.set("page", String(newPage)); — ცვლის ან ამატებს page პარამეტრს ახალი ნომრით (მაგალითად ?page=3-ით).
+      return next;
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" }); //გვერდის შეცვლისთანავე ეკრანი ლამაზი, გლუვი ანიმაციით ("smooth") ავიდეს ზევით
+  }
 
   //Early returns: till page is loading if we don;t have these checks code will try to execute map downwards
   //so when data is loading or there are no products yet it will crash
@@ -78,7 +98,10 @@ function CatalogPage() {
           Choose your loot.
         </p>
       </section>
-      <ProductGrid products={products} onAdd={(product) => addItem(product, 1)} />
+      <ProductGrid
+        products={products}
+        onAdd={(product) => addItem(product, 1)}
+      />
       {/* THAT before {products.map((product) => (
         <p key={product.id}>{product.title}  was before we created beautidul productCard and created component product grid which places all products into catalog page
         map is happening there as well! here we just import:)))
@@ -86,6 +109,18 @@ function CatalogPage() {
         არჯვენა მხარე {products} (ფრჩხილებში)ეს არის ის ცვლადი, რომელიც CatalogPage-ში სერვერიდან წამოვიღე და შიგნით პროდუქტების მასივი აწყვია
         
       ))} */}
+      <Pagination
+        page={page}
+        totalPages={totalPages}
+        onChange={handlePageChange}
+      />
+      {/*
+        page={page} — ეუბნება, რომელია ახლა აქტიური გვერდი (რომ ღილაკი გამოიყოს).
+
+totalPages={totalPages} — ეუბნება, სულ რამდენი გვერდი უნდა ააწყოს (მაგ: 17-მდე).
+
+onChange={handlePageChange} — გადასცემს იმ ფუნქციას, რომელიც უნდა გაეშვას მაშინ, როცა იუზერი რომელიმე გვერდის ღილაკს დააჭერს!
+        */}
     </>
   );
 }
